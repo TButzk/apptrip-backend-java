@@ -12,8 +12,10 @@ import unisinos.tripverse.model.user.CreateUserDTO;
 import unisinos.tripverse.model.user.UpdateUserDTO;
 import unisinos.tripverse.model.user.UserDTO;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/users")
 @Tag(name = "Users", description = "Controller responsável pela administração de usuários")
 public class UsersController {
 
@@ -22,9 +24,6 @@ public class UsersController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Criar usuário", description = "Cria um usuário dentro do sistema")
-    @Parameters({
-            @Parameter(name = "user", description = "Modelo para criar um usuário")
-    })
     public User create(@RequestBody CreateUserDTO create){
         return new User();
     }
@@ -34,8 +33,8 @@ public class UsersController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna usuário", description = "Retorna um usuário")
-    public User get(){
-        return new User();
+    public List<User> get(@RequestParam int limit, @RequestParam int skip){
+        return List.of(new User());
     }
 
     @GetMapping("{id}")
@@ -47,21 +46,21 @@ public class UsersController {
         return new User();
     }
 
-    @PatchMapping
+    @PatchMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza um usuário", description = "Atualiza um usuário")
-    public UserDTO update(@RequestBody UpdateUserDTO update){
+    public UserDTO update(@PathVariable String id, @RequestBody UpdateUserDTO update){
         return new UserDTO();
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Remove um usuário", description = "Remove um usuário")
-    public UserDTO delete(){
+    public UserDTO delete(@PathVariable String id){
         return new UserDTO();
     }
 }

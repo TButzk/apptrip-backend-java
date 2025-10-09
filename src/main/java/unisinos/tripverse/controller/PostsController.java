@@ -47,11 +47,11 @@ public class PostsController {
         return new PostDTO();
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
-    public PostDTO delete(){
+    public PostDTO delete(@PathVariable String id){
         return new PostDTO();
     }
 }
