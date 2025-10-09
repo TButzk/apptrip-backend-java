@@ -18,7 +18,7 @@ public class User extends EntityBase {
     private UUID address_id;
 
     @ManyToMany(mappedBy = "user")
-    private List<UserAddress> addresses;
+    private List<FavoritePlaces> addresses;
 
     @OneToMany(mappedBy = "user")
     private List<Route> route;
