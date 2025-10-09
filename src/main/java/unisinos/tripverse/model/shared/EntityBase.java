@@ -1,4 +1,4 @@
-package model.shared;
+package unisinos.tripverse.model.shared;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Entity
 @Data
-
 public abstract class EntityBase {
 
     @Id

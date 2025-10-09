@@ -1,11 +1,13 @@
-package model;
+package unisinos.tripverse.model.place;
 
 import jakarta.persistence.*;
+import unisinos.tripverse.model.post.Post;
+import unisinos.tripverse.model.route.Route;
+import unisinos.tripverse.model.shared.EntityBase;
 
 import java.util.List;
 
-@Entity
-public class Place  {
+public class Place extends EntityBase {
 
     private String name;
 

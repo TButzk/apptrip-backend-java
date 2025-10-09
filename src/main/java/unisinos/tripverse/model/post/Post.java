@@ -1,13 +1,16 @@
-package model;
+package unisinos.tripverse.model.post;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import unisinos.tripverse.model.event.Event;
+import unisinos.tripverse.model.media.Media;
+import unisinos.tripverse.model.place.Place;
+import unisinos.tripverse.model.shared.EntityBase;
+import unisinos.tripverse.model.user.User;
 
 import java.util.List;
 
-@Entity
-public class Post {
+public class Post extends EntityBase {
 
     private String title;
 

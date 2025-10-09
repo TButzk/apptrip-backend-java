@@ -1,10 +1,10 @@
-package model;
+package unisinos.tripverse.model.comment;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import model.shared.EntityBase;
+import unisinos.tripverse.model.post.Post;
+import unisinos.tripverse.model.shared.EntityBase;
+import unisinos.tripverse.model.user.User;
 
-@Entity
 public class Comment extends EntityBase {
 
     @ManyToOne

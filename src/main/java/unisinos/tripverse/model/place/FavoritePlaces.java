@@ -1,9 +1,10 @@
-package model;
+package unisinos.tripverse.model.place;
 
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-import model.shared.EntityBase;
+import unisinos.tripverse.model.shared.EntityBase;
+import unisinos.tripverse.model.user.User;
 
 import java.util.List;
 

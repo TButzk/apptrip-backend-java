@@ -1,6 +1,7 @@
-package model;
+package unisinos.tripverse.model.event;
 
 import jakarta.persistence.ManyToOne;
+import unisinos.tripverse.model.place.Place;
 
 public class Event {
 
