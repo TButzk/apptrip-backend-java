@@ -21,7 +21,7 @@ public class EventController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria o evento em um place")
     public EventDTO create(@PathVariable String placeId, @RequestBody CreateEventDTO create){
-        return new EventDTO();
+        return EventDTO.builder().build();
     }
 
     @GetMapping    @ApiResponse(responseCode = "200", description = "Sucesso!")
@@ -29,7 +29,7 @@ public class EventController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna todos os eventos de um place")
     public List<EventDTO> get(@PathVariable String placeId){
-        return List.of(new EventDTO());
+        return List.of(EventDTO.builder().build());
     }
 
     @GetMapping("{id}")
@@ -38,7 +38,7 @@ public class EventController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna um evento de um place pelo id")
     public EventDTO getById(@PathVariable String placeId, @PathVariable String id){
-        return new EventDTO();
+        return EventDTO.builder().build();
     }
 
     @PatchMapping("{id}")
@@ -47,7 +47,7 @@ public class EventController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza um evento de um place pelo id")
     public EventDTO update(@PathVariable String placeId, @PathVariable String id, @RequestBody UpdateEventDTO update){
-        return new EventDTO();
+        return EventDTO.builder().build();
     }
 
     @DeleteMapping("{id}")
@@ -56,6 +56,6 @@ public class EventController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Remove um evento de um place")
     public EventDTO delete(@PathVariable String placeId, @PathVariable String id){
-        return new EventDTO();
+        return EventDTO.builder().build();
     }
 }

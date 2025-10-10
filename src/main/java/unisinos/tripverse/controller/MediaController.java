@@ -20,7 +20,7 @@ public class MediaController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria uma media em um post")
     public MediaDTO create(@PathVariable String postId, @RequestBody CreateMediaDTO create){
-        return new MediaDTO();
+        return MediaDTO.builder().build();
     }
 
     @GetMapping
@@ -29,7 +29,7 @@ public class MediaController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna todas as medias de um post")
     public List<MediaDTO> get(@PathVariable String postId){
-        return List.of(new MediaDTO());
+        return List.of(MediaDTO.builder().build());
     }
 
     @GetMapping("{id}")
@@ -38,7 +38,7 @@ public class MediaController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma media de um post pelos ids")
     public MediaDTO getById(@PathVariable String postId, @PathVariable String id){
-        return new MediaDTO();
+        return MediaDTO.builder().build();
     }
 
     @DeleteMapping("{id}")
@@ -47,6 +47,6 @@ public class MediaController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Delete uma media de um post")
     public MediaDTO delete(@PathVariable String postId, @PathVariable String id){
-        return new MediaDTO();
+        return MediaDTO.builder().build();
     }
 }

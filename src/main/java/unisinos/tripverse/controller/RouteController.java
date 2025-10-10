@@ -22,6 +22,6 @@ public class RouteController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna os posts relacionados a uma rota")
     public List<PostDTO> get(@PathVariable String id){
-        return List.of(new PostDTO());
+        return List.of(PostDTO.builder().build());
     }
 }

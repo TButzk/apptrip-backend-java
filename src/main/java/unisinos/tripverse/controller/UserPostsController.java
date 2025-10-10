@@ -1,6 +1,7 @@
 package unisinos.tripverse.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,6 @@ public class UserPostsController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma lista de posts de um usuário")
     public List<PostDTO> get(@PathVariable String id){
-        return List.of(new PostDTO());
+        return List.of(PostDTO.builder().build());
     }
 }

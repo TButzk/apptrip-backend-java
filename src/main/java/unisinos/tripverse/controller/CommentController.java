@@ -22,7 +22,7 @@ public class CommentController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza ou cria um comment dentro de um post")
     public CommentDTO create(@PathVariable String postId, @RequestBody SetCommentDTO post){
-        return new CommentDTO();
+        return CommentDTO.builder().build();
     }
 
     @GetMapping("{id}")
@@ -31,7 +31,7 @@ public class CommentController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna um comment de um post pelos ids")
     public CommentDTO get(@PathVariable String postId, @PathVariable String id){
-        return new CommentDTO();
+        return CommentDTO.builder().build();
     }
 
     @GetMapping
@@ -40,7 +40,7 @@ public class CommentController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma lista de comments em um post")
     public List<CommentDTO> getList(@PathVariable String postId, @RequestParam int skip, @RequestParam int limit){
-        return List.of(new CommentDTO());
+        return List.of(CommentDTO.builder().build());
     }
 
     @DeleteMapping("{id}")
@@ -49,6 +49,6 @@ public class CommentController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Remove um comment de um Post")
     public CommentDTO delete(@PathVariable String postId, @PathVariable String id){
-        return new CommentDTO();
+        return CommentDTO.builder().build();
     }
 }

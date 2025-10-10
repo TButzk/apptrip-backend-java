@@ -22,7 +22,7 @@ public class PostsController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria um post")
     public PostDTO create(@RequestBody CreatePostDTO post){
-        return new PostDTO();
+        return PostDTO.builder().build();
     }
 
     @GetMapping("{id}")
@@ -31,7 +31,7 @@ public class PostsController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna um post pelo id")
     public PostDTO get(@PathVariable String id){
-        return new PostDTO();
+        return PostDTO.builder().build();
     }
 
     @GetMapping
@@ -40,7 +40,7 @@ public class PostsController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma lista de posts")
     public List<PostDTO> getList(@RequestParam int skip, @RequestParam int limit){
-        return List.of(new PostDTO());
+        return List.of(PostDTO.builder().build());
     }
 
     @PatchMapping
@@ -49,7 +49,7 @@ public class PostsController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza um post pelo id")
     public PostDTO update(@RequestBody UpdatePostDTO udpate){
-        return new PostDTO();
+        return PostDTO.builder().build();
     }
 
     @DeleteMapping("{id}")
@@ -58,6 +58,6 @@ public class PostsController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Deleta um post pelo id")
     public PostDTO delete(@PathVariable String id){
-        return new PostDTO();
+        return PostDTO.builder().build();
     }
 }

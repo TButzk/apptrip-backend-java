@@ -1,6 +1,7 @@
 package unisinos.tripverse.model.place;
 
 import jakarta.persistence.*;
+import unisinos.tripverse.model.event.Event;
 import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.route.Route;
 import unisinos.tripverse.model.shared.EntityBase;
@@ -17,6 +18,9 @@ public class Place extends EntityBase {
 
     @OneToMany
     private List<Post> posts;
+
+    @OneToMany
+    private List<Event> events;
 
     private int latitude;
 

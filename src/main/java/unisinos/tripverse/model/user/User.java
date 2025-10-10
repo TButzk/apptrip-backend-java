@@ -13,8 +13,10 @@ public class User extends EntityBase {
 
     private String password;
 
+    private String email;
+
     @ManyToMany(mappedBy = "user")
-    private List<FavoritePlaces> addresses;
+    private List<FavoritePlaces> favoritePlaces;
 
     @OneToMany(mappedBy = "user")
     private List<Route> route;

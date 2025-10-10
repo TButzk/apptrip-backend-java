@@ -11,9 +11,9 @@ import java.util.UUID;
 public abstract class EntityBase {
 
     @Id
-    private UUID Id;
+    private UUID id;
 
     public EntityBase(){
-        Id = UUID.randomUUID();
+        id = UUID.randomUUID();
     }
 }

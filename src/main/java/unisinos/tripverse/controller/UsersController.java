@@ -25,7 +25,7 @@ public class UsersController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria usuário")
     public UserDTO create(@RequestBody CreateUserDTO create){
-        return new UserDTO();
+        return UserDTO.builder().build();
     }
 
     @GetMapping
@@ -34,7 +34,7 @@ public class UsersController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma lista usuários")
     public List<UserDTO> get(@RequestParam int limit, @RequestParam int skip){
-        return List.of(new UserDTO());
+        return List.of(UserDTO.builder().build());
     }
 
     @GetMapping("{id}")
@@ -43,7 +43,7 @@ public class UsersController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna usuário por id")
     public UserDTO getById(@PathVariable String id){
-        return new UserDTO();
+        return UserDTO.builder().build();
     }
 
     @PatchMapping("{id}")
@@ -52,7 +52,7 @@ public class UsersController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza os dados de um usuário")
     public UserDTO update(@PathVariable String id, @RequestBody UpdateUserDTO update){
-        return new UserDTO();
+        return UserDTO.builder().build();
     }
 
     @DeleteMapping("{id}")
@@ -61,6 +61,6 @@ public class UsersController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Remove um usuário")
     public UserDTO delete(@PathVariable String id){
-        return new UserDTO();
+        return UserDTO.builder().build();
     }
 }
