@@ -2,7 +2,6 @@ package unisinos.tripverse.model.post;
 
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import unisinos.tripverse.model.event.Event;
 import unisinos.tripverse.model.media.Media;
 import unisinos.tripverse.model.place.Place;
 import unisinos.tripverse.model.shared.EntityBase;
@@ -27,7 +26,4 @@ public class Post extends EntityBase {
 
     @ManyToOne
     private Place place;
-
-    @ManyToOne
-    private Event event;
 }
