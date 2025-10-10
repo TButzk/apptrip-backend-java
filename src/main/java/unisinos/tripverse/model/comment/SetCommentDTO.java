@@ -1,4 +1,4 @@
 package unisinos.tripverse.model.comment;
 
-public class CreateCommentDTO {
+public class SetCommentDTO {
 }

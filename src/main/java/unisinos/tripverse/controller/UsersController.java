@@ -16,41 +16,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/users")
-@Tag(name = "Users", description = "Controller responsável pela administração de usuários")
+@Tag(name = "Users", description = "Endpoints do CRUD dos Usuários")
 public class UsersController {
 
     @PostMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
-    @Operation(summary = "Criar usuário", description = "Cria um usuário dentro do sistema")
-    public User create(@RequestBody CreateUserDTO create){
-        return new User();
+    @Operation(summary = "Cria usuário")
+    public UserDTO create(@RequestBody CreateUserDTO create){
+        return new UserDTO();
     }
 
     @GetMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
-    @Operation(summary = "Retorna usuário", description = "Retorna um usuário")
-    public List<User> get(@RequestParam int limit, @RequestParam int skip){
-        return List.of(new User());
+    @Operation(summary = "Retorna uma lista usuários")
+    public List<UserDTO> get(@RequestParam int limit, @RequestParam int skip){
+        return List.of(new UserDTO());
     }
 
     @GetMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
-    @Operation(summary = "Retorna usuário", description = "Retorna um usuário pelo ID")
-    public User getById(@PathVariable String id){
-        return new User();
+    @Operation(summary = "Retorna usuário por id")
+    public UserDTO getById(@PathVariable String id){
+        return new UserDTO();
     }
 
     @PatchMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
-    @Operation(summary = "Atualiza um usuário", description = "Atualiza um usuário")
+    @Operation(summary = "Atualiza os dados de um usuário")
     public UserDTO update(@PathVariable String id, @RequestBody UpdateUserDTO update){
         return new UserDTO();
     }
@@ -59,7 +59,7 @@ public class UsersController {
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
-    @Operation(summary = "Remove um usuário", description = "Remove um usuário")
+    @Operation(summary = "Remove um usuário")
     public UserDTO delete(@PathVariable String id){
         return new UserDTO();
     }
