@@ -1,13 +1,23 @@
 package unisinos.tripverse.model.user;
 
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import unisinos.tripverse.model.comment.Comment;
+import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.route.Route;
 import unisinos.tripverse.model.place.FavoritePlaces;
-import unisinos.tripverse.model.shared.EntityBase;
 import java.util.List;
+import java.util.UUID;
 
-public class User extends EntityBase {
+@Entity
+@Table(name = "app_user")
+public class User {
+
+    @Id
+    private UUID id;
+
+    public User(){
+        id = UUID.randomUUID();
+    }
 
     private String name;
 
@@ -15,9 +25,15 @@ public class User extends EntityBase {
 
     private String email;
 
-    @ManyToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<FavoritePlaces> favoritePlaces;
 
     @OneToMany(mappedBy = "user")
-    private List<Route> route;
+    private List<Route> routes;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 }

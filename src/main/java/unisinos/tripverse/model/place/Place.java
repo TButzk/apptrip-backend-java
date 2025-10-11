@@ -3,19 +3,27 @@ package unisinos.tripverse.model.place;
 import jakarta.persistence.*;
 import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.route.Route;
-import unisinos.tripverse.model.shared.EntityBase;
 
 import java.util.List;
+import java.util.UUID;
 
-public class Place extends EntityBase {
+@Entity
+public class Place {
+
+    @Id
+    private UUID id;
+
+    public Place(){
+        id = UUID.randomUUID();
+    }
 
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "route", foreignKey = @ForeignKey(name = "fk_place_route"))
+    @JoinColumn(name = "route_id")
     private Route route;
 
-    @OneToMany
+    @OneToMany(mappedBy = "place")
     private List<Post> posts;
 
     private int latitude;

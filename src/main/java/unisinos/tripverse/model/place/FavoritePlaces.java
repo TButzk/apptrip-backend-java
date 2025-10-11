@@ -1,22 +1,28 @@
 package unisinos.tripverse.model.place;
 
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import unisinos.tripverse.model.shared.EntityBase;
+import jakarta.persistence.*;
 import unisinos.tripverse.model.user.User;
 
 import java.util.List;
+import java.util.UUID;
 
-public class FavoritePlaces extends EntityBase {
+@Entity
+public class FavoritePlaces {
+
+    @Id
+    private UUID id;
+
+    public FavoritePlaces(){
+        id = UUID.randomUUID();
+    }
 
     private String name;
 
-    @ManyToMany()
-    @JoinColumn(name =  "user", foreignKey = @ForeignKey(name = "fk_user_place"))
-    private List<User> users;
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToMany()
-    @JoinColumn(name =  "address", foreignKey = @ForeignKey(name = "fk_place_user"))
-    private List<Place> places;
+    @ManyToOne()
+    @JoinColumn(name = "place_id")
+    private Place place;
 }
