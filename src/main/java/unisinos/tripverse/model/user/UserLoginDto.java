@@ -1,15 +1,16 @@
 package unisinos.tripverse.model.user;
 
-import lombok.Builder;
-import lombok.Data;
-import unisinos.tripverse.model.place.FavoritePlaces;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
-public class UserDTO {
+public class UserLoginDto {
+    private String token;
 
     private String name;
 
@@ -18,5 +19,4 @@ public class UserDTO {
     private List<UUID> favoritePlacesIds;
 
     private List<UUID> routeIds;
-
 }

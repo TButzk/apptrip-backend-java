@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Builder
 @Data
-public class SetCommentDTO {
+public class SetCommentDto {
     private String message;
 }

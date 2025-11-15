@@ -5,10 +5,8 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import unisinos.tripverse.model.place.FavoritePlaceDTO;
-import unisinos.tripverse.model.place.SetFavoritePlaceDTO;
-import unisinos.tripverse.model.user.CreateUserDTO;
-import unisinos.tripverse.model.user.UserDTO;
+import unisinos.tripverse.model.place.FavoritePlaceDto;
+import unisinos.tripverse.model.place.SetFavoritePlaceDto;
 
 import java.util.List;
 
@@ -22,8 +20,8 @@ public class FavoritePlacesController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Adiciona ou atualiza um  favorite place de um usuário")
-    public FavoritePlaceDTO add(@PathVariable String userId, @PathVariable String placesId, @RequestBody SetFavoritePlaceDTO set){
-        return FavoritePlaceDTO.builder().build();
+    public FavoritePlaceDto add(@PathVariable String userId, @PathVariable String placesId, @RequestBody SetFavoritePlaceDto set){
+        return FavoritePlaceDto.builder().build();
     }
 
     @GetMapping
@@ -31,8 +29,8 @@ public class FavoritePlacesController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna os favorite places de um usuário")
-    public List<FavoritePlaceDTO> get(@PathVariable String userId){
-        return List.of(FavoritePlaceDTO.builder().build());
+    public List<FavoritePlaceDto> get(@PathVariable String userId){
+        return List.of(FavoritePlaceDto.builder().build());
     }
 
     @DeleteMapping("{placesId}")
@@ -40,7 +38,7 @@ public class FavoritePlacesController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Remove um favorite place de um usuário")
-    public FavoritePlaceDTO delete(@PathVariable String userId, @PathVariable String placesId){
-        return FavoritePlaceDTO.builder().build();
+    public FavoritePlaceDto delete(@PathVariable String userId, @PathVariable String placesId){
+        return FavoritePlaceDto.builder().build();
     }
 }

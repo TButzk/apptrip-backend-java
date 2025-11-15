@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class CommentDTO {
+public class CommentDto {
 
     private String message;
 

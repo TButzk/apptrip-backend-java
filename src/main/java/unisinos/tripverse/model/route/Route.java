@@ -1,6 +1,8 @@
 package unisinos.tripverse.model.route;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 import unisinos.tripverse.model.place.Place;
 import unisinos.tripverse.model.user.User;
 
@@ -8,15 +10,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Data
+@Builder
 public class Route {
     private String name;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-
-    public Route(){
-        id = UUID.randomUUID();
-    }
 
     @ManyToOne
     @JoinColumn(name =  "user_id")

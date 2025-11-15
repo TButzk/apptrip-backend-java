@@ -1,6 +1,9 @@
 package unisinos.tripverse.model.post;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import unisinos.tripverse.model.media.Media;
 import unisinos.tripverse.model.place.Place;
 import unisinos.tripverse.model.user.User;
@@ -10,14 +13,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Builder
+@Data
+@AllArgsConstructor
 public class Post {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-
-    public Post(){
-        id = UUID.randomUUID();
-    }
 
     private String title;
 
@@ -26,7 +29,7 @@ public class Post {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     @OneToMany(mappedBy = "post")

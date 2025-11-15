@@ -5,9 +5,10 @@ import lombok.Data;
 
 @Builder
 @Data
-public class UpdateUserDTO {
+public class CreateUserDto {
 
     private String name;
 
     private String email;
+
 }

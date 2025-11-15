@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Builder
 @Data
-public class SetFavoritePlaceDTO {
+public class SetFavoritePlaceDto {
     private String name;
 }

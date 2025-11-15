@@ -3,9 +3,14 @@ package unisinos.tripverse.model.place;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+import java.util.UUID;
+
 @Builder
 @Data
-public class CreatePlaceDTO {
+public class PlaceDto {
+
+    private UUID id;
 
     private String name;
 
@@ -28,4 +33,6 @@ public class CreatePlaceDTO {
     private String state;
 
     private PlaceType type;
+
+    private List<UUID> eventIds;
 }

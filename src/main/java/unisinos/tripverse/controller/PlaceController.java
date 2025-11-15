@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import unisinos.tripverse.model.place.CreatePlaceDTO;
-import unisinos.tripverse.model.place.PlaceDTO;
-import unisinos.tripverse.model.place.UpdatePlaceDTO;
+import unisinos.tripverse.model.place.CreatePlaceDto;
+import unisinos.tripverse.model.place.PlaceDto;
+import unisinos.tripverse.model.place.UpdatePlaceDto;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ public class PlaceController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna um place pelo id")
-    public PlaceDTO get(@PathVariable String id){
-        return PlaceDTO.builder().build();
+    public PlaceDto get(@PathVariable String id){
+        return PlaceDto.builder().build();
     }
 
     @GetMapping
@@ -29,8 +29,8 @@ public class PlaceController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma lista de places")
-    public List<PlaceDTO> get(@RequestParam int limit, @RequestParam int skip){
-        return List.of(PlaceDTO.builder().build());
+    public List<PlaceDto> get(@RequestParam int limit, @RequestParam int skip){
+        return List.of(PlaceDto.builder().build());
     }
 
     @PostMapping
@@ -38,8 +38,8 @@ public class PlaceController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria um place")
-    public PlaceDTO create(CreatePlaceDTO create){
-        return PlaceDTO.builder().build();
+    public PlaceDto create(CreatePlaceDto create){
+        return PlaceDto.builder().build();
     }
 
     @PatchMapping("{id}")
@@ -47,8 +47,8 @@ public class PlaceController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza um place")
-    public PlaceDTO update(@PathVariable String id, UpdatePlaceDTO update){
-        return PlaceDTO.builder().build();
+    public PlaceDto update(@PathVariable String id, UpdatePlaceDto update){
+        return PlaceDto.builder().build();
     }
 
     @DeleteMapping("{id}")
@@ -56,7 +56,7 @@ public class PlaceController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Deleta um place pelo id")
-    public PlaceDTO delete(@PathVariable String id){
-        return PlaceDTO.builder().build();
+    public PlaceDto delete(@PathVariable String id){
+        return PlaceDto.builder().build();
     }
 }

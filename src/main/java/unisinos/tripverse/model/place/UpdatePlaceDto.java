@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class UpdatePlaceDTO {
+public class UpdatePlaceDto {
 
     private String name;
 

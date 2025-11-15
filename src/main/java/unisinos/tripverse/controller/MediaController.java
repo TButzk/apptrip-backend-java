@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import unisinos.tripverse.model.media.CreateMediaDTO;
-import unisinos.tripverse.model.media.MediaDTO;
+import unisinos.tripverse.model.media.CreateMediaDto;
+import unisinos.tripverse.model.media.MediaDto;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ public class MediaController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria uma media em um post")
-    public MediaDTO create(@PathVariable String postId, @RequestBody CreateMediaDTO create){
-        return MediaDTO.builder().build();
+    public MediaDto create(@PathVariable String postId, @RequestBody CreateMediaDto create){
+        return MediaDto.builder().build();
     }
 
     @GetMapping
@@ -28,8 +28,8 @@ public class MediaController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna todas as medias de um post")
-    public List<MediaDTO> get(@PathVariable String postId){
-        return List.of(MediaDTO.builder().build());
+    public List<MediaDto> get(@PathVariable String postId){
+        return List.of(MediaDto.builder().build());
     }
 
     @GetMapping("{id}")
@@ -37,8 +37,8 @@ public class MediaController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma media de um post pelos ids")
-    public MediaDTO getById(@PathVariable String postId, @PathVariable String id){
-        return MediaDTO.builder().build();
+    public MediaDto getById(@PathVariable String postId, @PathVariable String id){
+        return MediaDto.builder().build();
     }
 
     @DeleteMapping("{id}")
@@ -46,7 +46,7 @@ public class MediaController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Delete uma media de um post")
-    public MediaDTO delete(@PathVariable String postId, @PathVariable String id){
-        return MediaDTO.builder().build();
+    public MediaDto delete(@PathVariable String postId, @PathVariable String id){
+        return MediaDto.builder().build();
     }
 }

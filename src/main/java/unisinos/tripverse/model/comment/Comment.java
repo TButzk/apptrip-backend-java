@@ -1,23 +1,21 @@
 package unisinos.tripverse.model.comment;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.user.User;
 
 import java.util.UUID;
 
 @Entity
+@Data
+@Builder
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-
-    public Comment(){
-        id = UUID.randomUUID();
-    }
 
     @ManyToOne
     @JoinColumn(name =  "user_id")

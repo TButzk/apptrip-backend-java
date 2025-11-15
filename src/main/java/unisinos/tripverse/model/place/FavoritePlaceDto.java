@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class FavoritePlaceDTO {
+public class FavoritePlaceDto {
 
     private String name;
 

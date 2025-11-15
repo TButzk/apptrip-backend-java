@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class CreateMediaDTO {
+public class CreateMediaDto {
 
     private String name;
 

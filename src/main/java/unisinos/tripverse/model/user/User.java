@@ -1,6 +1,8 @@
 package unisinos.tripverse.model.user;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 import unisinos.tripverse.model.comment.Comment;
 import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.route.Route;
@@ -10,14 +12,13 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "app_user")
+@Data
+@Builder
 public class User {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-
-    public User(){
-        id = UUID.randomUUID();
-    }
 
     private String name;
 

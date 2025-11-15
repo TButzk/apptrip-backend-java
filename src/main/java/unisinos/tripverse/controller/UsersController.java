@@ -1,40 +1,44 @@
 package unisinos.tripverse.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import unisinos.tripverse.model.user.User;
-import unisinos.tripverse.model.user.CreateUserDTO;
-import unisinos.tripverse.model.user.UpdateUserDTO;
-import unisinos.tripverse.model.user.UserDTO;
+import unisinos.tripverse.map.UserMapper;
+import unisinos.tripverse.model.shared.DtoResponse;
+import unisinos.tripverse.model.shared.PageInfo;
+import unisinos.tripverse.model.shared.PageResponse;
+import unisinos.tripverse.model.user.UpdateUserDto;
+import unisinos.tripverse.model.user.UserDto;
+import unisinos.tripverse.service.UserService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/users")
 @Tag(name = "Users", description = "Endpoints do CRUD dos Usuários")
 public class UsersController {
 
-    @PostMapping
-    @ApiResponse(responseCode = "200", description = "Sucesso!")
-    @ApiResponse(responseCode =  "404", description = "Não encontrado.")
-    @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
-    @Operation(summary = "Cria usuário")
-    public UserDTO create(@RequestBody CreateUserDTO create){
-        return UserDTO.builder().build();
-    }
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma lista usuários")
-    public List<UserDTO> get(@RequestParam int limit, @RequestParam int skip){
-        return List.of(UserDTO.builder().build());
+    public ResponseEntity<PageResponse<UserDto>> get(@RequestParam int take, @RequestParam int skip){
+        var users = userService.getUser(take, skip);
+        var response = PageResponse.success(users.map(userMapper::toDto).toList(), PageInfo.fromPage(users));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{id}")
@@ -42,25 +46,29 @@ public class UsersController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna usuário por id")
-    public UserDTO getById(@PathVariable String id){
-        return UserDTO.builder().build();
+    public ResponseEntity<DtoResponse<UserDto>> getById(@PathVariable String id){
+
+        var user = userService.getUser(UUID.fromString(id));
+        return ResponseEntity.ok(DtoResponse.success(userMapper.toDto(user)));
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza os dados de um usuário")
-    public UserDTO update(@PathVariable String id, @RequestBody UpdateUserDTO update){
-        return UserDTO.builder().build();
+    public ResponseEntity<DtoResponse<UserDto>> update(@RequestBody UpdateUserDto update){
+        var user = userService.updateUser(update);
+        return ResponseEntity.ok(DtoResponse.success(userMapper.toDto(user)));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Remove um usuário")
-    public UserDTO delete(@PathVariable String id){
-        return UserDTO.builder().build();
+    public ResponseEntity<DtoResponse<UserDto>> delete(){
+        var user = userService.removeUser();
+        return ResponseEntity.ok(DtoResponse.success(userMapper.toDto(user)));
     }
 }

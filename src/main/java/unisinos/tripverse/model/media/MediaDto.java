@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class MediaDTO {
+public class MediaDto {
 
     private UUID id;
 

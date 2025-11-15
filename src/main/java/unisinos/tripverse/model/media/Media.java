@@ -1,22 +1,20 @@
 package unisinos.tripverse.model.media;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 import unisinos.tripverse.model.post.Post;
 
 import java.util.UUID;
 
 @Entity
+@Data
+@Builder
 public class Media {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-
-    public Media(){
-        id = UUID.randomUUID();
-    }
 
     private String name;
 

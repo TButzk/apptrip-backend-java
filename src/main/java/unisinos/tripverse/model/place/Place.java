@@ -1,6 +1,8 @@
 package unisinos.tripverse.model.place;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.route.Route;
 
@@ -8,14 +10,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Data
+@Builder
 public class Place {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-
-    public Place(){
-        id = UUID.randomUUID();
-    }
 
     private String name;
 

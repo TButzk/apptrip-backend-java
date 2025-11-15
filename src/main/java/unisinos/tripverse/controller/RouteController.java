@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import unisinos.tripverse.model.post.PostDTO;
+import unisinos.tripverse.model.post.PostDto;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class RouteController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna os posts relacionados a uma rota")
-    public List<PostDTO> get(@PathVariable String id){
-        return List.of(PostDTO.builder().build());
+    public List<PostDto> get(@PathVariable String id){
+        return List.of(PostDto.builder().build());
     }
 }

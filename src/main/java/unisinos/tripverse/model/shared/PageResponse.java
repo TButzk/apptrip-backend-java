@@ -1,0 +1,29 @@
+package unisinos.tripverse.model.shared;
+
+import lombok.Builder;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
+
+@Builder
+public class PageResponse<T> {
+
+    private List<T> data;
+
+    private PageInfo page;
+
+    private String error;
+
+    public static <T> PageResponse<T> success(List<T> parsedData, PageInfo pageInfo) {
+        return PageResponse.<T>builder()
+                .page(pageInfo)
+                .data(parsedData)
+                .build();
+    }
+
+    public static <T> PageResponse<T> error(String message) {
+        return PageResponse.<T>builder()
+                .error(message).build();
+    }
+
+}
