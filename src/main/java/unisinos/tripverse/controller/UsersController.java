@@ -1,7 +1,7 @@
 package unisinos.tripverse.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.Response;
@@ -58,8 +58,14 @@ public class UsersController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza os dados de um usuário")
     public ResponseEntity<DtoResponse<UserDto>> update(@RequestBody UpdateUserDto update){
-        var user = userService.updateUser(update);
-        return ResponseEntity.ok(DtoResponse.success(userMapper.toDto(user)));
+
+        try{
+            var user = userService.updateUser(update);
+            return ResponseEntity.ok(DtoResponse.success(userMapper.toDto(user)));
+        }
+        catch (Exception ex){
+            return ResponseEntity.ok(DtoResponse.error(ex.getMessage()));
+        }
     }
 
     @DeleteMapping

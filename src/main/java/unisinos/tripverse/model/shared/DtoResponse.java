@@ -1,8 +1,10 @@
 package unisinos.tripverse.model.shared;
 
 import lombok.Builder;
+import lombok.Data;
 
 @Builder
+@Data
 public class DtoResponse<T> {
 
     private T data;

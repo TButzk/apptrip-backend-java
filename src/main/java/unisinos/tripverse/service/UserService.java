@@ -42,12 +42,21 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(UpdateUserDto update) {
+    public User updateUser(UpdateUserDto update) throws Exception {
         var user = getUser();
 
         user.setName(update.getName());
 
-        user.setEmail(update.getEmail());
+        if(!update.getEmail().equals(user.getEmail()) ){
+
+            if(userRepository.findByEmail(update.getEmail()).isPresent()){
+                throw new Exception("Invalid e-mail");
+            }
+
+            user.setEmail(update.getEmail());
+        }
+
+
 
         return userRepository.save(user);
     }

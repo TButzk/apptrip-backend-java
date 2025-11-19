@@ -1,8 +1,10 @@
 package unisinos.tripverse.model.user;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import unisinos.tripverse.model.comment.Comment;
 import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.route.Route;
@@ -14,6 +16,8 @@ import java.util.UUID;
 @Table(name = "app_user")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id

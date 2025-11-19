@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import unisinos.tripverse.model.media.Media;
 import unisinos.tripverse.model.place.Place;
 import unisinos.tripverse.model.user.User;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Post {
 

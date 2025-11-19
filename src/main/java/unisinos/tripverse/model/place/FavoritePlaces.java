@@ -1,8 +1,10 @@
 package unisinos.tripverse.model.place;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import unisinos.tripverse.model.user.User;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FavoritePlaces {
 
     @Id

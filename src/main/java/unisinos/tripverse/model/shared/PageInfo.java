@@ -1,9 +1,11 @@
 package unisinos.tripverse.model.shared;
 
 import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.domain.Page;
 
 @Builder
+@Data
 public class PageInfo {
     private int totalPages;
 

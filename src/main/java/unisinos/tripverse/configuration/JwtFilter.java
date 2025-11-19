@@ -18,15 +18,10 @@ import java.util.UUID;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private final JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     @Autowired
-    private final UserDetailsServiceImpl userDetailsService;
-
-    public JwtFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
-    }
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -38,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
             final String token = authHeader.substring(7);
             if (jwtUtil.isTokenValid(token)) {
                 var claims = jwtUtil.extractClaims(token);
-                var userDetails = userDetailsService.loadUserByUsername(claims.getId());
+                var userDetails = userDetailsService.loadUserById(claims.getId());
                 var auth = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

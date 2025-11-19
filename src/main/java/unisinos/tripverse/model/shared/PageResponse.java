@@ -1,11 +1,13 @@
 package unisinos.tripverse.model.shared;
 
 import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Builder
+@Data
 public class PageResponse<T> {
 
     private List<T> data;

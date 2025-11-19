@@ -11,12 +11,9 @@ import java.util.UUID;
 @Data
 public class UserDto {
 
+    private UUID id;
+
     private String name;
 
     private String email;
-
-    private List<UUID> favoritePlacesIds;
-
-    private List<UUID> routeIds;
-
 }

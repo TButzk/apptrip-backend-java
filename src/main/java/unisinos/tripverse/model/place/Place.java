@@ -1,8 +1,10 @@
 package unisinos.tripverse.model.place;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import unisinos.tripverse.model.post.Post;
 import unisinos.tripverse.model.route.Route;
 
@@ -12,6 +14,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Place {
 
     @Id

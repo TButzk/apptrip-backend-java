@@ -21,7 +21,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        var user = userRepository.findById(UUID.fromString(username))
+        var user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return new AuthenticatedUser(user.getId(), user.getEmail(), user.getPassword());
+    }
+
+    public UserDetails loadUserById(String id) throws UsernameNotFoundException {
+
+        var user = userRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return new AuthenticatedUser(user.getId(), user.getEmail(), user.getPassword());

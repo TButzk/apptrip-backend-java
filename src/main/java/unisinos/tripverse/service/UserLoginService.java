@@ -26,9 +26,6 @@ public class UserLoginService {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserProvider userProvider;
-
-    @Autowired
     private UserRepository userRepository;
 
     public User createUser(CreateUserDto dto) throws AlreadyExistsException {
@@ -39,7 +36,7 @@ public class UserLoginService {
         }
         var user = User.builder().email(dto.getEmail()).name(dto.getName()).build();
 
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(encoder.encode(dto.getPassword()));
 
         return userRepository.save(user);
     }
@@ -51,11 +48,9 @@ public class UserLoginService {
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
         );
 
-        var auth = userProvider.getAuthenticatedUser();
+        var user = userRepository.findByEmail(authRequest.getEmail()).orElseThrow();
 
-        var user = userRepository.findById(auth.getId()).orElseThrow();
-
-        var token = jwtUtil.generateToken(authRequest.getEmail());
+        var token = jwtUtil.generateToken(user);
 
         return new LoginResult(user, token);
     }
