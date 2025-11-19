@@ -3,18 +3,8 @@ package unisinos.tripverse.model.comment;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Builder
 @Data
-public class CommentDto {
-
-    private UUID id;
-
+public class UpdateCommentDto {
     private String message;
-
-    private UUID postId;
-
-    private UUID userId;
-
 }

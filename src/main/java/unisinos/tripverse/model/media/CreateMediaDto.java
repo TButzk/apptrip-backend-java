@@ -10,4 +10,6 @@ public class CreateMediaDto {
     private String name;
 
     private String url;
+
+    private MediaType type;
 }
