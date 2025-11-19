@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ import unisinos.tripverse.model.user.UpdateUserDto;
 import unisinos.tripverse.model.user.UserDto;
 import unisinos.tripverse.service.UserService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

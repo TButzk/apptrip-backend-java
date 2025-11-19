@@ -2,7 +2,6 @@ package unisinos.tripverse.model.user;
 
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
