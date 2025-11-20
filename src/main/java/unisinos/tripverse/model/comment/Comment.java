@@ -21,11 +21,11 @@ public class Comment {
     @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
 
+    private String message;
+
     @ManyToOne
     @JoinColumn(name =  "user_id")
     private User user;
-
-    private String message;
 
     @ManyToOne
     @JoinColumn(name =  "post_id")

@@ -17,4 +17,5 @@ public class MediaDto {
 
     private String url;
 
+    private MediaType type;
 }
