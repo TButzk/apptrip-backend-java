@@ -3,19 +3,11 @@ package unisinos.tripverse.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import unisinos.tripverse.map.RouteMapper;
+import unisinos.tripverse.model.post.PostDto;
 import unisinos.tripverse.model.route.CreateRouteDto;
 import unisinos.tripverse.model.route.RouteDto;
 import unisinos.tripverse.model.shared.DtoResponse;
@@ -23,19 +15,20 @@ import unisinos.tripverse.model.shared.PageInfo;
 import unisinos.tripverse.model.shared.PageResponse;
 import unisinos.tripverse.service.RouteService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1/routes")
+@RequestMapping("api/v1/routes/{id}")
 @Tag(name = "Routes", description = "Endpoints que administra as rotas")
 public class RouteController {
 
     @Autowired
     private RouteService routeService;
-    
+
     @Autowired
     private RouteMapper routeMapper;
-	
+
     @GetMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
@@ -45,7 +38,7 @@ public class RouteController {
         var route = routeService.get(UUID.fromString(id));
         return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
     }
-    
+
     @GetMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
@@ -55,7 +48,7 @@ public class RouteController {
         var routes = routeService.get(take, skip);
         var response = PageResponse.success(routes.map(routeMapper::toDto).toList(), PageInfo.fromPage(routes));
         return ResponseEntity.ok(response);
-    }   
+    }
 
     @PostMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
@@ -66,7 +59,7 @@ public class RouteController {
         var route = routeService.create(create);
         return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
     }
-    
+
     @DeleteMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
@@ -75,5 +68,5 @@ public class RouteController {
     public ResponseEntity<DtoResponse<RouteDto>> delete(@PathVariable String id){
         var route = routeService.delete(UUID.fromString(id));
         return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
-    }    
+    }
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 import java.util.List;
 import java.util.UUID;
 
-import unisinos.tripverse.model.user.UserDto;
 
 @Builder
 @Data
