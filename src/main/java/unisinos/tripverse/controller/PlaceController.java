@@ -25,7 +25,7 @@ import java.util.UUID;
 public class PlaceController {
 	
 	@Autowired
-	PlaceService placeService;
+	private PlaceService placeService;
 	
     @Autowired
     private PlaceMapper placeMapper;	

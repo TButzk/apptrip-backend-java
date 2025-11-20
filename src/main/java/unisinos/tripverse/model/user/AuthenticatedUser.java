@@ -12,10 +12,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 public class AuthenticatedUser implements UserDetails {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	private UUID id;
     private String username;
     private String password;

@@ -19,7 +19,7 @@ import unisinos.tripverse.repository.UserRepository;
 public class RouteService {
 	
 	@Autowired
-	RouteRepository routeRepository;
+	private RouteRepository routeRepository;
 	
     @Autowired
     private UserProvider userProvider;
