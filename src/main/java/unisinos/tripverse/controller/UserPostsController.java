@@ -12,7 +12,6 @@ import unisinos.tripverse.model.shared.PageInfo;
 import unisinos.tripverse.model.shared.PageResponse;
 import unisinos.tripverse.service.PostService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
