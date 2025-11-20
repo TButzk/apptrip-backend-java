@@ -33,6 +33,8 @@ public class PlaceDto {
     private String state;
 
     private PlaceType type;
+    
+    private UUID routeId;
 
     private List<UUID> eventIds;
 }

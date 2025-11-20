@@ -11,6 +11,8 @@ import unisinos.tripverse.model.route.Route;
 import java.util.List;
 import java.util.UUID;
 
+import io.jsonwebtoken.lang.Collections;
+
 @Entity
 @Data
 @Builder
@@ -50,4 +52,12 @@ public class Place {
     private String state;
 
     private PlaceType type;
+    
+    public List<UUID> getPostsIds() {
+    	if (posts == null) {
+    		return Collections.emptyList();
+		}
+    	
+		return posts.stream().map(Post::getId).toList();
+	}
 }

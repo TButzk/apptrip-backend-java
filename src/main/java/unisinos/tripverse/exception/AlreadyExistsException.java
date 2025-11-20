@@ -2,7 +2,12 @@ package unisinos.tripverse.exception;
 
 public class AlreadyExistsException extends Exception {
 
-    public AlreadyExistsException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AlreadyExistsException(String message) {
         super(message);
     }
 }

@@ -1,5 +1,7 @@
 package unisinos.tripverse.model.place;
 
+import java.util.UUID;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,4 +30,6 @@ public class CreatePlaceDto {
     private String state;
 
     private PlaceType type;
+    
+    private UUID routeId;
 }

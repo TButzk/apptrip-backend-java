@@ -15,7 +15,6 @@ import unisinos.tripverse.repository.PlaceRepository;
 import unisinos.tripverse.repository.PostRepository;
 import unisinos.tripverse.repository.UserRepository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service

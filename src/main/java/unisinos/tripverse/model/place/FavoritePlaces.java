@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import unisinos.tripverse.model.user.User;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
