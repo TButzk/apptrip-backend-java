@@ -14,9 +14,11 @@ public class PlaceDto {
 
     private String name;
 
-    private int latitude;
+    private double latitude;
 
-    private int longitude;
+    private double longitude;
+
+    private String neighborhood;
 
     private String street;
 

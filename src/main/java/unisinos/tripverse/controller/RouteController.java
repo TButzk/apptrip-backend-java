@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1/routes/{id}")
+@RequestMapping("api/v1/routes")
 @Tag(name = "Routes", description = "Endpoints que administra as rotas")
 public class RouteController {
 

@@ -5,16 +5,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import unisinos.tripverse.exception.NotFoundException;
 import unisinos.tripverse.map.PlaceMapper;
+import unisinos.tripverse.model.location.Location;
 import unisinos.tripverse.model.place.CreatePlaceDto;
 import unisinos.tripverse.model.place.PlaceDto;
 import unisinos.tripverse.model.place.UpdatePlaceDto;
 import unisinos.tripverse.model.shared.DtoResponse;
 import unisinos.tripverse.model.shared.PageInfo;
 import unisinos.tripverse.model.shared.PageResponse;
+import unisinos.tripverse.service.LocationService;
 import unisinos.tripverse.service.PlaceService;
 
 import java.util.UUID;
@@ -28,7 +32,10 @@ public class PlaceController {
 	private PlaceService placeService;
 	
     @Autowired
-    private PlaceMapper placeMapper;	
+    private PlaceMapper placeMapper;
+
+    @Autowired
+    private LocationService locationService;
     
     @GetMapping("{id}")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
@@ -58,8 +65,20 @@ public class PlaceController {
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria um place")
     public ResponseEntity<DtoResponse<PlaceDto>> create(@RequestBody CreatePlaceDto create){
-        var place = placeService.create(create);
-        var response = DtoResponse.success(placeMapper.toDto(place)); 
+
+        Location location;
+
+        try{
+            location = locationService.get(create.getFullAddress());
+        }
+        catch (NotFoundException exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DtoResponse.error(exception.getMessage()));
+        }
+
+        var place = placeService.create(create, location);
+
+        var response = DtoResponse.success(placeMapper.toDto(place));
+
         return ResponseEntity.ok(response);
     }
 

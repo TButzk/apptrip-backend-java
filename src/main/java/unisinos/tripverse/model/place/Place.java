@@ -33,9 +33,9 @@ public class Place {
     @OneToMany(mappedBy = "place")
     private List<Post> posts;
 
-    private int latitude;
+    private double latitude;
 
-    private int longitude;
+    private double longitude;
 
     private String street;
 
@@ -50,6 +50,8 @@ public class Place {
     private String country;
 
     private String state;
+
+    private String neighborhood;
 
     private PlaceType type;
     

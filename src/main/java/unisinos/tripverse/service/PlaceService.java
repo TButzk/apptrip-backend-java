@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import unisinos.tripverse.model.location.Location;
 import unisinos.tripverse.model.place.CreatePlaceDto;
 import unisinos.tripverse.model.place.Place;
 import unisinos.tripverse.model.place.UpdatePlaceDto;
@@ -35,12 +36,12 @@ public class PlaceService {
     }
 
     @Transactional
-	public Place create(CreatePlaceDto create) {
+	public Place create(CreatePlaceDto create, Location location) {
     	var route = routeRepository.get(create.getRouteId());
 		var place = Place.builder()
 				.name(create.getName())
-				.latitude(create.getLatitude())
-				.longitude(create.getLongitude())
+				.latitude(location.getLatitude())
+				.longitude(location.getLongitude())
 				.street(create.getStreet())
 				.streetNumber(create.getStreetNumber())
 				.complement(create.getComplement())

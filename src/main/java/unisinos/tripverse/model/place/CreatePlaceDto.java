@@ -11,10 +11,6 @@ public class CreatePlaceDto {
 
     private String name;
 
-    private int latitude;
-
-    private int longitude;
-
     private String street;
 
     private String streetNumber;
@@ -25,6 +21,8 @@ public class CreatePlaceDto {
 
     private String postalCode;
 
+    private String neighborhood;
+
     private String country;
 
     private String state;
@@ -32,4 +30,14 @@ public class CreatePlaceDto {
     private PlaceType type;
     
     private UUID routeId;
+
+    public String getFullAddress(){
+        return
+                street + " " +
+                streetNumber + " " +
+                neighborhood + " "+
+                city + " " +
+                state + " " +
+                postalCode;
+    }
 }
