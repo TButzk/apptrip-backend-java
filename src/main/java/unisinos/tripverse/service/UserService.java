@@ -7,8 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import unisinos.tripverse.configuration.UserProvider;
-import unisinos.tripverse.model.user.*;
+import unisinos.tripverse.dto.UpdateUserDto;
+import unisinos.tripverse.model.User;
+import unisinos.tripverse.provider.UserProvider;
 import unisinos.tripverse.repository.UserRepository;
 import java.util.UUID;
 

@@ -9,9 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import unisinos.tripverse.configuration.UserProvider;
-import unisinos.tripverse.model.route.CreateRouteDto;
-import unisinos.tripverse.model.route.Route;
+import unisinos.tripverse.provider.UserProvider;
+import unisinos.tripverse.dto.CreateRouteDto;
+import unisinos.tripverse.model.Route;
 import unisinos.tripverse.repository.RouteRepository;
 import unisinos.tripverse.repository.UserRepository;
 

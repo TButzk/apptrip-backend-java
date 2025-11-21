@@ -7,15 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import unisinos.tripverse.map.RouteMapper;
-import unisinos.tripverse.model.post.PostDto;
-import unisinos.tripverse.model.route.CreateRouteDto;
-import unisinos.tripverse.model.route.RouteDto;
+import unisinos.tripverse.dto.CreateRouteDto;
+import unisinos.tripverse.dto.RouteDto;
 import unisinos.tripverse.model.shared.DtoResponse;
 import unisinos.tripverse.model.shared.PageInfo;
 import unisinos.tripverse.model.shared.PageResponse;
 import unisinos.tripverse.service.RouteService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

@@ -5,8 +5,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import unisinos.tripverse.exception.NotFoundException;
-import unisinos.tripverse.model.location.GeocodeResponse;
-import unisinos.tripverse.model.location.Location;
+import unisinos.tripverse.model.response.GeocodeResponse;
+import unisinos.tripverse.model.Location;
 
 import java.util.List;
 import java.util.Map;

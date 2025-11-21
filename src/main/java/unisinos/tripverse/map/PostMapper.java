@@ -1,8 +1,8 @@
 package unisinos.tripverse.map;
 
 import org.springframework.stereotype.Component;
-import unisinos.tripverse.model.post.Post;
-import unisinos.tripverse.model.post.PostDto;
+import unisinos.tripverse.model.Post;
+import unisinos.tripverse.dto.PostDto;
 
 @Component
 public class PostMapper {

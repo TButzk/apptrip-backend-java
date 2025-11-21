@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import unisinos.tripverse.exception.NotFoundException;
 import unisinos.tripverse.map.PlaceMapper;
-import unisinos.tripverse.model.location.Location;
-import unisinos.tripverse.model.place.CreatePlaceDto;
-import unisinos.tripverse.model.place.PlaceDto;
-import unisinos.tripverse.model.place.UpdatePlaceDto;
+import unisinos.tripverse.model.Location;
+import unisinos.tripverse.dto.CreatePlaceDto;
+import unisinos.tripverse.dto.PlaceDto;
+import unisinos.tripverse.dto.UpdatePlaceDto;
 import unisinos.tripverse.model.shared.DtoResponse;
 import unisinos.tripverse.model.shared.PageInfo;
 import unisinos.tripverse.model.shared.PageResponse;

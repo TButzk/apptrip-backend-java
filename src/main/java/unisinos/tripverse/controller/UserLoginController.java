@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import unisinos.tripverse.exception.AlreadyExistsException;
 import unisinos.tripverse.map.UserMapper;
 import unisinos.tripverse.model.shared.DtoResponse;
-import unisinos.tripverse.model.user.AuthenticationDto;
-import unisinos.tripverse.model.user.CreateUserDto;
-import unisinos.tripverse.model.user.UserDto;
-import unisinos.tripverse.model.user.UserLoginDto;
+import unisinos.tripverse.dto.AuthenticationDto;
+import unisinos.tripverse.dto.CreateUserDto;
+import unisinos.tripverse.dto.UserDto;
+import unisinos.tripverse.dto.UserLoginDto;
 import unisinos.tripverse.service.UserLoginService;
 
 @Slf4j

@@ -6,10 +6,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import unisinos.tripverse.configuration.UserProvider;
-import unisinos.tripverse.model.comment.Comment;
-import unisinos.tripverse.model.comment.CreateCommentDto;
-import unisinos.tripverse.model.comment.UpdateCommentDto;
+import unisinos.tripverse.provider.UserProvider;
+import unisinos.tripverse.model.Comment;
+import unisinos.tripverse.dto.CreateCommentDto;
+import unisinos.tripverse.dto.UpdateCommentDto;
 import unisinos.tripverse.repository.*;
 
 import java.util.UUID;

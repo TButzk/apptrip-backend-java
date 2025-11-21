@@ -2,8 +2,8 @@ package unisinos.tripverse.map;
 
 import org.springframework.stereotype.Component;
 
-import unisinos.tripverse.model.place.Place;
-import unisinos.tripverse.model.place.PlaceDto;
+import unisinos.tripverse.model.Place;
+import unisinos.tripverse.dto.PlaceDto;
 
 @Component
 public class PlaceMapper {

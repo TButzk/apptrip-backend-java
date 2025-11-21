@@ -1,9 +1,9 @@
 package unisinos.tripverse.map;
 
 import org.springframework.stereotype.Component;
-import unisinos.tripverse.model.user.User;
-import unisinos.tripverse.model.user.UserDto;
-import unisinos.tripverse.model.user.UserLoginDto;
+import unisinos.tripverse.model.User;
+import unisinos.tripverse.dto.UserDto;
+import unisinos.tripverse.dto.UserLoginDto;
 
 @Component
 public class UserMapper {

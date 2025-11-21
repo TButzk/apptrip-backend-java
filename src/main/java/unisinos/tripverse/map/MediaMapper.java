@@ -1,8 +1,8 @@
 package unisinos.tripverse.map;
 
 import org.springframework.stereotype.Component;
-import unisinos.tripverse.model.media.Media;
-import unisinos.tripverse.model.media.MediaDto;
+import unisinos.tripverse.model.Media;
+import unisinos.tripverse.dto.MediaDto;
 
 @Component
 public class MediaMapper {

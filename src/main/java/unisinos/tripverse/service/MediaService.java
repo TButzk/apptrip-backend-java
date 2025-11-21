@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import unisinos.tripverse.model.media.CreateMediaDto;
-import unisinos.tripverse.model.media.Media;
+import unisinos.tripverse.dto.CreateMediaDto;
+import unisinos.tripverse.model.Media;
 import unisinos.tripverse.repository.MediaRepository;
 import unisinos.tripverse.repository.PostRepository;
 

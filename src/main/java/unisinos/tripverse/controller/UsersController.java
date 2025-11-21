@@ -11,8 +11,8 @@ import unisinos.tripverse.map.UserMapper;
 import unisinos.tripverse.model.shared.DtoResponse;
 import unisinos.tripverse.model.shared.PageInfo;
 import unisinos.tripverse.model.shared.PageResponse;
-import unisinos.tripverse.model.user.UpdateUserDto;
-import unisinos.tripverse.model.user.UserDto;
+import unisinos.tripverse.dto.UpdateUserDto;
+import unisinos.tripverse.dto.UserDto;
 import unisinos.tripverse.service.UserService;
 
 import java.util.UUID;

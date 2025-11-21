@@ -1,0 +1,22 @@
+package unisinos.tripverse.dto;
+
+import lombok.Builder;
+import lombok.Data;
+import unisinos.tripverse.model.MediaType;
+
+import java.util.UUID;
+
+@Builder
+@Data
+public class MediaDto {
+
+    private UUID id;
+
+    private UUID postId;
+
+    private String name;
+
+    private String url;
+
+    private MediaType type;
+}

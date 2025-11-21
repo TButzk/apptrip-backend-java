@@ -5,7 +5,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import unisinos.tripverse.configuration.UserProvider;
+import unisinos.tripverse.provider.UserProvider;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -5,8 +5,8 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import unisinos.tripverse.model.place.FavoritePlaceDto;
-import unisinos.tripverse.model.place.SetFavoritePlaceDto;
+import unisinos.tripverse.dto.FavoritePlaceDto;
+import unisinos.tripverse.dto.SetFavoritePlaceDto;
 
 import java.util.List;
 

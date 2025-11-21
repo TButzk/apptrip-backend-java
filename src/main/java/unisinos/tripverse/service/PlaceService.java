@@ -9,10 +9,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import unisinos.tripverse.model.location.Location;
-import unisinos.tripverse.model.place.CreatePlaceDto;
-import unisinos.tripverse.model.place.Place;
-import unisinos.tripverse.model.place.UpdatePlaceDto;
+import unisinos.tripverse.model.Location;
+import unisinos.tripverse.dto.CreatePlaceDto;
+import unisinos.tripverse.model.Place;
+import unisinos.tripverse.dto.UpdatePlaceDto;
 import unisinos.tripverse.repository.PlaceRepository;
 
 @Service

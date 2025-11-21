@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import unisinos.tripverse.map.PostMapper;
-import unisinos.tripverse.model.post.PostDto;
+import unisinos.tripverse.dto.PostDto;
 import unisinos.tripverse.model.shared.PageInfo;
 import unisinos.tripverse.model.shared.PageResponse;
 import unisinos.tripverse.service.PostService;

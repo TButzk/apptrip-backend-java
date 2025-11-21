@@ -2,8 +2,8 @@ package unisinos.tripverse.map;
 
 import org.springframework.stereotype.Component;
 
-import unisinos.tripverse.model.route.Route;
-import unisinos.tripverse.model.route.RouteDto;
+import unisinos.tripverse.model.Route;
+import unisinos.tripverse.dto.RouteDto;
 
 @Component
 public class RouteMapper {

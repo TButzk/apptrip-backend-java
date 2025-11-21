@@ -1,8 +1,8 @@
 package unisinos.tripverse.map;
 
 import org.springframework.stereotype.Component;
-import unisinos.tripverse.model.comment.Comment;
-import unisinos.tripverse.model.comment.CommentDto;
+import unisinos.tripverse.model.Comment;
+import unisinos.tripverse.dto.CommentDto;
 
 @Component
 public class CommentMapper {

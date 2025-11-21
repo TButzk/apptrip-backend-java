@@ -6,9 +6,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import unisinos.tripverse.configuration.JwtUtil;
+import unisinos.tripverse.dto.AuthenticationDto;
+import unisinos.tripverse.dto.CreateUserDto;
+import unisinos.tripverse.model.result.LoginResult;
+import unisinos.tripverse.model.User;
+import unisinos.tripverse.util.JwtUtil;
 import unisinos.tripverse.exception.AlreadyExistsException;
-import unisinos.tripverse.model.user.*;
 import unisinos.tripverse.repository.UserRepository;
 
 @Service
