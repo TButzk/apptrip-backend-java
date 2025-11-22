@@ -33,12 +33,33 @@ public class CreatePlaceDto {
     private UUID routeId;
 
     public String getFullAddress(){
-        return
-                street + " " +
-                streetNumber + " " +
-                neighborhood + " "+
-                city + " " +
-                state + " " +
-                postalCode;
+    	
+    	StringBuilder address = new StringBuilder("");
+    	
+    	if (street != null && !street.isEmpty()) {
+    		address.append(street).append(" ");
+    	}
+    	
+    	if (streetNumber != null && !streetNumber.isEmpty()) {
+    		address.append(streetNumber).append(" ");
+    	}
+    	
+    	if (neighborhood != null && !neighborhood.isEmpty()) {
+    		address.append(neighborhood).append(" ");
+    	}
+    	
+    	if (city != null && !city.isEmpty()) {
+    		address.append(city).append(" ");
+    	}
+    	
+    	if (state != null && !state.isEmpty()) {
+    		address.append(state).append(" ");
+    	}
+    	
+    	if (postalCode != null && !postalCode.isEmpty()) {
+    		address.append(postalCode).append(" ");
+    	}
+    		
+        return address.toString().trim();
     }
 }

@@ -37,6 +37,8 @@ public class LocationService {
 
         if(response == null)
             throw new NotFoundException("Address not found");
+        if (response.isEmpty())
+			throw new NotFoundException("Address not found");
 
         var geoResponse = response.getFirst();
 
