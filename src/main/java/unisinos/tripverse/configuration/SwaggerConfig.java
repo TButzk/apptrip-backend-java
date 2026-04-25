@@ -19,7 +19,7 @@ public class SwaggerConfig {
                 .version("1.0")
                 .description("Social media for travels"))
                 .servers(List.of(
-                new Server().url("http://localhost:8080").description("Local server")
+                new Server().url("http://localhost:5010").description("Local server")
         ));
     }
 }

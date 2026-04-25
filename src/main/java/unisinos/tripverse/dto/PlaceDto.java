@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import unisinos.tripverse.model.PlaceType;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,10 @@ public class PlaceDto {
     private double latitude;
 
     private double longitude;
+
+    private Integer sequence;
+
+    private LocalDateTime capturedAt;
 
     private String neighborhood;
 

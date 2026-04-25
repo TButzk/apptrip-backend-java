@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +35,10 @@ public class Place {
     private double latitude;
 
     private double longitude;
+
+    private Integer sequence;
+
+    private LocalDateTime capturedAt;
 
     private String street;
 

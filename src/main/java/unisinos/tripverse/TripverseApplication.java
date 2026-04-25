@@ -9,5 +9,4 @@ public class TripverseApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TripverseApplication.class, args);
 	}
-
 }

@@ -49,9 +49,11 @@ public class UploadController {
 
         } catch (IOException e) {
 
-            var message = e.getMessage();
+            //var message = e.getMessage();
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity
+            		.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            		.build();
         }
     }
 

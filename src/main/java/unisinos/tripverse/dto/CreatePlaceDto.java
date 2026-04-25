@@ -1,5 +1,6 @@
 package unisinos.tripverse.dto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import lombok.Builder;
@@ -29,8 +30,20 @@ public class CreatePlaceDto {
     private String state;
 
     private PlaceType type;
+
+	private Double latitude;
+
+	private Double longitude;
+
+	private Integer sequence;
+
+	private LocalDateTime capturedAt;
     
     private UUID routeId;
+
+	public boolean hasCoordinates() {
+		return latitude != null && longitude != null;
+	}
 
     public String getFullAddress(){
     	

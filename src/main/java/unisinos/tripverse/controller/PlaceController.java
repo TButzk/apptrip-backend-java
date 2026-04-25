@@ -59,6 +59,17 @@ public class PlaceController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("by-route/{routeId}")
+    @ApiResponse(responseCode = "200", description = "Sucesso!")
+    @ApiResponse(responseCode =  "404", description = "Não encontrado.")
+    @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
+    @Operation(summary = "Retorna uma lista de places por rota")
+    public ResponseEntity<PageResponse<PlaceDto>> getByRoute(@PathVariable String routeId, @RequestParam int skip, @RequestParam int take){
+        var places = placeService.getByRoute(UUID.fromString(routeId), take, skip);
+        var response = PageResponse.success(places.map(placeMapper::toDto).toList(), PageInfo.fromPage(places));
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
@@ -66,13 +77,22 @@ public class PlaceController {
     @Operation(summary = "Cria um place")
     public ResponseEntity<DtoResponse<PlaceDto>> create(@RequestBody CreatePlaceDto create){
 
-        Location location;
-
-        try{
-            location = locationService.get(create.getFullAddress());
+        if(create.getLatitude() != null && create.getLongitude() == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DtoResponse.error("longitude is required when latitude is provided"));
         }
-        catch (NotFoundException exception){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DtoResponse.error(exception.getMessage()));
+        if(create.getLongitude() != null && create.getLatitude() == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DtoResponse.error("latitude is required when longitude is provided"));
+        }
+
+        Location location = null;
+
+        if (!create.hasCoordinates()) {
+            try{
+                location = locationService.get(create.getFullAddress());
+            }
+            catch (NotFoundException exception){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DtoResponse.error(exception.getMessage()));
+            }
         }
 
         var place = placeService.create(create, location);

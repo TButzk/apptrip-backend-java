@@ -14,6 +14,9 @@ public class RouteMapper {
                 .name(route.getName())
                 .userId(route.getUser().getId())
                 .placeIds(route.getPlaceIds())
+            .status(route.getStatus())
+            .publishedAt(route.getPublishedAt())
+            .finalizedAt(route.getFinalizedAt())
                 .build();
     }
 }

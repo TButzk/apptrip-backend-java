@@ -35,13 +35,27 @@ public class PlaceService {
         return placeRepository.findAll((PageRequest.of(page, take, Sort.by("id").ascending())));
     }
 
+    @Transactional(readOnly = true)
+    public Page<Place> getByRoute(UUID routeId, int take, int skip) {
+        int page = skip / take;
+        var sort = Sort.by(Sort.Order.asc("sequence"), Sort.Order.asc("id"));
+        return placeRepository.findAllByRouteId(routeId, PageRequest.of(page, take, sort));
+    }
+
     @Transactional
 	public Place create(CreatePlaceDto create, Location location) {
     	var route = routeRepository.get(create.getRouteId());
+
+        double latitude = create.hasCoordinates() ? create.getLatitude() : location.getLatitude();
+        double longitude = create.hasCoordinates() ? create.getLongitude() : location.getLongitude();
+
 		var place = Place.builder()
 				.name(create.getName())
-				.latitude(location.getLatitude())
-				.longitude(location.getLongitude())
+                .latitude(latitude)
+                .longitude(longitude)
+                .sequence(create.getSequence())
+                .capturedAt(create.getCapturedAt())
+                .neighborhood(create.getNeighborhood())
 				.street(create.getStreet())
 				.streetNumber(create.getStreetNumber())
 				.complement(create.getComplement())

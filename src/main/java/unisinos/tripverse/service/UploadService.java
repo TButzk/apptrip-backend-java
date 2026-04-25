@@ -1,6 +1,7 @@
 package unisinos.tripverse.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,26 +20,24 @@ public class UploadService {
     @Autowired
     private UserProvider userProvider;
 
-    private final String UPLOAD_FOLDER = "./uploads/";
+    @Value("${apptrip.uploads.path:./uploads}")
+    private String uploadFolder;
 
     public String upload(MultipartFile file) throws IOException {
 
         var filePath = userProvider.getAuthenticatedUser().getId().toString() + UUID.randomUUID() + file.getOriginalFilename();
 
-        var fullPath = UPLOAD_FOLDER + filePath;
+        var fullPath = Paths.get(uploadFolder).resolve(filePath);
 
-        Path copyPath = Paths.get(fullPath);
-
-        Files.createDirectories(copyPath.getParent());
-
-        file.transferTo(copyPath);
+        Files.createDirectories(fullPath.getParent());
+        file.transferTo(fullPath);
 
         return ServletUriComponentsBuilder.fromCurrentContextPath().toUriString() + "/api/v1/uploads/" + filePath;
     }
 
     public UrlResource read(String path) throws IOException {
 
-        Path baseDir = Paths.get(UPLOAD_FOLDER).toAbsolutePath();
+        Path baseDir = Paths.get(uploadFolder).toAbsolutePath();
 
         Path requested = baseDir.resolve(path).normalize();
 

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import unisinos.tripverse.map.RouteMapper;
@@ -48,6 +49,26 @@ public class RouteController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("mine")
+    @ApiResponse(responseCode = "200", description = "Sucesso!")
+    @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
+    @Operation(summary = "Retorna uma lista de rotas do usuario autenticado")
+    public ResponseEntity<PageResponse<RouteDto>> getMine(@RequestParam int skip, @RequestParam int take){
+        var routes = routeService.getMine(take, skip);
+        var response = PageResponse.success(routes.map(routeMapper::toDto).toList(), PageInfo.fromPage(routes));
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("published")
+    @ApiResponse(responseCode = "200", description = "Sucesso!")
+    @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
+    @Operation(summary = "Retorna uma lista de rotas publicadas")
+    public ResponseEntity<PageResponse<RouteDto>> getPublished(@RequestParam int skip, @RequestParam int take){
+        var routes = routeService.getPublished(take, skip);
+        var response = PageResponse.success(routes.map(routeMapper::toDto).toList(), PageInfo.fromPage(routes));
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
@@ -66,5 +87,33 @@ public class RouteController {
     public ResponseEntity<DtoResponse<RouteDto>> delete(@PathVariable String id){
         var route = routeService.delete(UUID.fromString(id));
         return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
+    }
+
+    @PatchMapping("{id}/publish")
+    @ApiResponse(responseCode = "200", description = "Sucesso!")
+    @ApiResponse(responseCode =  "400", description = "Erro na validacao de publicacao.")
+    @Operation(summary = "Publica uma route")
+    public ResponseEntity<DtoResponse<RouteDto>> publish(@PathVariable String id){
+        try {
+            var route = routeService.publish(UUID.fromString(id));
+            return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
+        } catch (IllegalStateException exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(DtoResponse.error(exception.getMessage()));
+        }
+    }
+
+    @PatchMapping("{id}/finalize")
+    @ApiResponse(responseCode = "200", description = "Sucesso!")
+    @ApiResponse(responseCode =  "400", description = "Erro na validacao de finalizacao.")
+    @Operation(summary = "Finaliza uma route")
+    public ResponseEntity<DtoResponse<RouteDto>> finalizeRoute(@PathVariable String id){
+        try {
+            var route = routeService.finalizeRoute(UUID.fromString(id));
+            return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
+        } catch (IllegalStateException exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(DtoResponse.error(exception.getMessage()));
+        }
     }
 }

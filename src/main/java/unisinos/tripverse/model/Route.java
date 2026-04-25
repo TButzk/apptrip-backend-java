@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +30,14 @@ public class Route {
 
     @OneToMany(mappedBy = "route")
     private List<Place> places;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private RouteStatus status = RouteStatus.DRAFT;
+
+    private LocalDateTime publishedAt;
+
+    private LocalDateTime finalizedAt;
     
     public List<UUID> getPlaceIds() {
     	if (places == null) {
