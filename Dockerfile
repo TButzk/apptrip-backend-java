@@ -1,4 +1,4 @@
-FROM maven:3.9.11-eclipse-temurin-25 AS build
+﻿FROM maven:3.9.11-eclipse-temurin-25 AS build
 
 WORKDIR /workspace
 
@@ -12,11 +12,12 @@ FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-COPY --from=build /workspace/target/*.jar /app/tripverse.jar
+COPY --from=build /workspace/target/*.jar /app/apptrip.jar
 
 ENV SERVER_PORT=5010
 ENV APPTRIP_UPLOADS_PATH=/app/uploads
 
 EXPOSE 5010
 
-ENTRYPOINT ["java", "-jar", "/app/tripverse.jar"]
+ENTRYPOINT ["java", "-jar", "/app/apptrip.jar"]
+
