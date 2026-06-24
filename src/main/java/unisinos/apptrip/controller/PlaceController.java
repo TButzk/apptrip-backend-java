@@ -22,6 +22,7 @@ import unisinos.apptrip.service.LocationService;
 import unisinos.apptrip.service.PlaceService;
 
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/places")
@@ -75,7 +76,7 @@ public class PlaceController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria um place")
-    public ResponseEntity<DtoResponse<PlaceDto>> create(@RequestBody CreatePlaceDto create){
+    public ResponseEntity<DtoResponse<PlaceDto>> create(@Valid @RequestBody CreatePlaceDto create){
 
         if(create.getLatitude() != null && create.getLongitude() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DtoResponse.error("longitude is required when latitude is provided"));
@@ -107,7 +108,7 @@ public class PlaceController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza um place")
-    public ResponseEntity<DtoResponse<PlaceDto>> update(@PathVariable String id, @RequestBody UpdatePlaceDto update){
+    public ResponseEntity<DtoResponse<PlaceDto>> update(@PathVariable String id, @Valid @RequestBody UpdatePlaceDto update){
         var place = placeService.update(UUID.fromString(id), update);
         var response = DtoResponse.success(placeMapper.toDto(place)); 
         return ResponseEntity.ok(response);

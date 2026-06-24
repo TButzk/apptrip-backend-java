@@ -24,6 +24,10 @@ public class PlaceDto {
 
     private LocalDateTime capturedAt;
 
+    private UUID clientPointId;
+
+    private Double accuracyMeters;
+
     private String neighborhood;
 
     private String street;

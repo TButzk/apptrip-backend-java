@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         var user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return new AuthenticatedUser(user.getId(), user.getEmail(), user.getPassword());
+        return new AuthenticatedUser(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
     }
 
     public UserDetails loadUserById(String id) throws UsernameNotFoundException {
@@ -32,6 +32,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         var user = userRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return new AuthenticatedUser(user.getId(), user.getEmail(), user.getPassword());
+        return new AuthenticatedUser(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
     }
 }

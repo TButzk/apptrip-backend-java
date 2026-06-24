@@ -14,7 +14,9 @@ public class PostMapper {
                 .message(post.getMessage())
                 .date(post.getDate())
                 .userId(post.getUser().getId())
+                .userName(post.getUser().getName())
                 .placeId(post.getPlace().getId())
+                .mediaIds(post.getMedia() == null ?java.util.List.of() : post.getMedia().stream().map(media -> media.getId()).toList())
                 .build();
     }
 }

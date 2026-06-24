@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -20,6 +21,9 @@ public class Comment {
     private UUID id;
 
     private String message;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name =  "user_id")

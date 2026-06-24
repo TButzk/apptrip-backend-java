@@ -2,15 +2,24 @@ package unisinos.apptrip.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Builder
 @Data
 public class CreateUserDto {
 
+    @NotBlank
+    @Size(max = 120)
     private String name;
 
+    @NotBlank
+    @Email
     private String email;
 
+    @NotBlank
+    @Size(min = 8, max = 72)
     private String password;
 }
 

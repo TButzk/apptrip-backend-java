@@ -1,104 +1,68 @@
 package unisinos.apptrip;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.UUID;
+import java.util.Locale;
 
+import static org.hamcrest.Matchers.emptyOrNullString;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class RoutePlacesControllerIntegrationTest {
+class RoutePlacesControllerIntegrationTest extends PostgresIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
-    void shouldReturnRoutePlacesOrderedBySequence() throws Exception {
-        String email = "it-" + UUID.randomUUID() + "@apptrip.local";
-        String password = "123456";
+    void protectedEndpointReturnsJsonUnauthorizedWithoutBasicChallenge() throws Exception {
+        mockMvc.perform(get("/api/v1/routes/mine").param("skip", "0").param("take", "20"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(header().doesNotExist("WWW-Authenticate"))
+                .andExpect(header().string("Content-Type", not(emptyOrNullString())))
+                .andExpect(jsonPath("$.error").isNotEmpty());
+    }
 
-        mockMvc.perform(post("/api/v1/users-auth")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "name": "Integration User",
-                                  "email": "%s",
-                                  "password": "%s"
-                                }
-                                """.formatted(email, password)))
-                .andExpect(status().isOk());
+    @Test
+    void recordsOrderedPointsAndIgnoresDuplicateOrNearCoordinates() throws Exception {
+        String token = createUserAndLogin();
+        String routeId = createRoute(token, "Captura automatica", 25);
+        String pointId = UUID.randomUUID().toString();
 
-        String loginJson = mockMvc.perform(post("/api/v1/users-auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "email": "%s",
-                                  "password": "%s"
-                                }
-                                """.formatted(email, password)))
+        String firstResponse = addPoint(token, routeId, pointId, 1, -29.167300, -51.179600)
                 .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+                .andReturn().getResponse().getContentAsString();
+        String firstPointId = objectMapper.readTree(firstResponse).path("data").path("id").asText();
 
-        String token = extractField(loginJson, "\"token\":\"", "\"");
-
-        String routeJson = mockMvc.perform(post("/api/v1/routes")
-                        .header("Authorization", "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "name": "IT Route"
-                                }
-                                """))
+        addPoint(token, routeId, pointId, 1, -29.167300, -51.179600)
                 .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+                .andExpect(jsonPath("$.data.id").value(firstPointId));
 
-        String routeId = extractField(routeJson, "\"id\":\"", "\"");
+        addPoint(token, routeId, UUID.randomUUID().toString(), 2, -29.167301, -51.179601)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").value(firstPointId));
 
-        mockMvc.perform(post("/api/v1/places")
-                        .header("Authorization", "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "name": "Point Sequence 2",
-                                  "routeId": "%s",
-                                  "type": "Public",
-                                  "latitude": -29.1673,
-                                  "longitude": -51.1796,
-                                  "sequence": 2,
-                                  "capturedAt": "2026-04-07T21:59:00"
-                                }
-                                """.formatted(routeId)))
-                .andExpect(status().isOk());
-
-        mockMvc.perform(post("/api/v1/places")
-                        .header("Authorization", "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "name": "Point Sequence 1",
-                                  "routeId": "%s",
-                                  "type": "Public",
-                                  "latitude": -29.1651,
-                                  "longitude": -51.1820,
-                                  "sequence": 1,
-                                  "capturedAt": "2026-04-07T21:58:30"
-                                }
-                                """.formatted(routeId)))
-                .andExpect(status().isOk());
+        addPoint(token, routeId, UUID.randomUUID().toString(), 3, -29.165100, -51.182000)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").value(not(firstPointId)));
 
         mockMvc.perform(get("/api/v1/routes/{routeId}/places", routeId)
                         .param("skip", "0")
@@ -107,128 +71,101 @@ class RoutePlacesControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.length()").value(2))
                 .andExpect(jsonPath("$.data[0].sequence").value(1))
-                .andExpect(jsonPath("$.data[1].sequence").value(2));
+                .andExpect(jsonPath("$.data[1].sequence").value(3));
     }
 
     @Test
-    void shouldPublishAndFinalizeRoute() throws Exception {
-        String email = "it-" + UUID.randomUUID() + "@apptrip.local";
-        String password = "123456";
+    void finalizesRenamesAndPublishesRoute() throws Exception {
+        String token = createUserAndLogin();
+        String routeId = createRoute(token, "Rota em andamento", 25);
 
-        mockMvc.perform(post("/api/v1/users-auth")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "name": "Integration User",
-                                  "email": "%s",
-                                  "password": "%s"
-                                }
-                                """.formatted(email, password)))
+        addPoint(token, routeId, UUID.randomUUID().toString(), 1, -29.167300, -51.179600)
+                .andExpect(status().isOk());
+        addPoint(token, routeId, UUID.randomUUID().toString(), 2, -29.165100, -51.182000)
                 .andExpect(status().isOk());
 
-        String loginJson = mockMvc.perform(post("/api/v1/users-auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "email": "%s",
-                                  "password": "%s"
-                                }
-                                """.formatted(email, password)))
+        mockMvc.perform(patch("/api/v1/routes/{id}/finalize", routeId)
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+                .andExpect(jsonPath("$.data.status").value("FINISHED"));
 
-        String token = extractField(loginJson, "\"token\":\"", "\"");
-
-        String routeJson = mockMvc.perform(post("/api/v1/routes")
+        mockMvc.perform(patch("/api/v1/routes/{id}", routeId)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {
-                                  "name": "IT Route Publish"
-                                }
+                                {"name":"Rota academica concluida"}
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.status").value("DRAFT"))
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
-        String routeId = extractField(routeJson, "\"id\":\"", "\"");
-
-        mockMvc.perform(post("/api/v1/places")
-                        .header("Authorization", "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "name": "Point A",
-                                  "routeId": "%s",
-                                  "type": "Public",
-                                  "latitude": -29.1673,
-                                  "longitude": -51.1796,
-                                  "sequence": 1,
-                                  "capturedAt": "2026-04-07T21:59:00"
-                                }
-                                """.formatted(routeId)))
-                .andExpect(status().isOk());
-
-        mockMvc.perform(post("/api/v1/places")
-                        .header("Authorization", "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                  "name": "Point B",
-                                  "routeId": "%s",
-                                  "type": "Public",
-                                  "latitude": -29.1651,
-                                  "longitude": -51.1820,
-                                  "sequence": 2,
-                                  "capturedAt": "2026-04-07T21:58:30"
-                                }
-                                """.formatted(routeId)))
-                .andExpect(status().isOk());
+                .andExpect(jsonPath("$.data.name").value("Rota academica concluida"));
 
         mockMvc.perform(patch("/api/v1/routes/{id}/publish", routeId)
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.status").value("PUBLISHED"));
 
-        mockMvc.perform(get("/api/v1/routes/mine")
-                        .param("skip", "0")
-                        .param("take", "20")
-                        .header("Authorization", "Bearer " + token))
+        mockMvc.perform(get("/api/v1/routes/published").param("skip", "0").param("take", "20"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.length()").value(1))
-                .andExpect(jsonPath("$.data[0].status").value("PUBLISHED"));
-
-        mockMvc.perform(get("/api/v1/routes/published")
-                        .param("skip", "0")
-                        .param("take", "20")
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.length()").value(1))
-                .andExpect(jsonPath("$.data[0].status").value("PUBLISHED"));
-
-        mockMvc.perform(patch("/api/v1/routes/{id}/finalize", routeId)
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.status").value("FINISHED"));
+                .andExpect(jsonPath("$.data[?(@.id == '" + routeId + "')].status").value("PUBLISHED"));
     }
 
-    private static String extractField(String source, String startToken, String endToken) {
-        int start = source.indexOf(startToken);
-        if (start < 0) {
-            throw new IllegalStateException("Start token not found: " + startToken);
-        }
-        start += startToken.length();
+    private String createUserAndLogin() throws Exception {
+        String email = "it-" + UUID.randomUUID() + "@apptrip.local";
+        String password = "Senha123!";
 
-        int end = source.indexOf(endToken, start);
-        if (end < 0) {
-            throw new IllegalStateException("End token not found: " + endToken);
-        }
+        mockMvc.perform(post("/api/v1/users-auth")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"name":"Usuario Integracao","email":"%s","password":"%s"}
+                                """.formatted(email, password)))
+                .andExpect(status().isCreated());
 
-        return source.substring(start, end);
+        String response = mockMvc.perform(post("/api/v1/users-auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"email":"%s","password":"%s"}
+                                """.formatted(email, password)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        JsonNode json = objectMapper.readTree(response);
+        return json.path("data").path("token").asText();
+    }
+
+    private String createRoute(String token, String name, int minimumDistanceMeters) throws Exception {
+        String response = mockMvc.perform(post("/api/v1/routes")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"name":"%s","minimumDistanceMeters":%d}
+                                """.formatted(name, minimumDistanceMeters)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        return objectMapper.readTree(response).path("data").path("id").asText();
+    }
+
+    private ResultActions addPoint(
+            String token,
+            String routeId,
+            String clientPointId,
+            int sequence,
+            double latitude,
+            double longitude
+    ) throws Exception {
+        return mockMvc.perform(post("/api/v1/places")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format(Locale.ROOT, """
+                        {
+                          "name":"Ponto %d",
+                          "routeId":"%s",
+                          "type":"Public",
+                          "latitude":%f,
+                          "longitude":%f,
+                          "sequence":%d,
+                          "capturedAt":"2026-06-06T12:00:00",
+                          "clientPointId":"%s",
+                          "accuracyMeters":5.0
+                        }
+                        """, sequence, routeId, latitude, longitude, sequence, clientPointId)));
     }
 }
-

@@ -13,6 +13,7 @@ public class UserMapper {
                 .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
+                .role(user.getRole())
                 .build();
     }
 
@@ -21,6 +22,8 @@ public class UserMapper {
                 .email(user.getEmail())
                 .name(user.getName())
                 .token(token)
+                .id(user.getId())
+                .role(user.getRole())
                 .build();
     }
 }

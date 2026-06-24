@@ -31,7 +31,7 @@ public class RoutePlacesController {
 
     @GetMapping
     @ApiResponse(responseCode = "200", description = "Sucesso!")
-    @ApiResponse(responseCode = "404", description = "Nao encontrado.")
+    @ApiResponse(responseCode = "404", description = "Não encontrado.")
     @ApiResponse(responseCode = "400", description = "Erro na validacao dos dados enviados.")
     @Operation(summary = "Lista os pontos/lugares de uma rota com ordenacao por sequence e id")
     public ResponseEntity<PageResponse<PlaceDto>> getByRoute(

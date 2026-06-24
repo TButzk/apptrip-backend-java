@@ -3,6 +3,7 @@ package unisinos.apptrip.dto;
 import lombok.*;
 
 import java.util.UUID;
+import unisinos.apptrip.model.UserRole;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,5 +16,7 @@ public class UserDto {
     private String name;
 
     private String email;
+
+    private UserRole role;
 }
 

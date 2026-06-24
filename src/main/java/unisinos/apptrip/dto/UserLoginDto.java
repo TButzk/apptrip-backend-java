@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
+import unisinos.apptrip.model.UserRole;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,5 +20,9 @@ public class UserLoginDto {
     private List<UUID> favoritePlacesIds;
 
     private List<UUID> routeIds;
+
+    private UUID id;
+
+    private UserRole role;
 }
 

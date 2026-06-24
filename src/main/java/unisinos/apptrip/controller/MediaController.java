@@ -16,6 +16,7 @@ import unisinos.apptrip.model.shared.PageResponse;
 import unisinos.apptrip.service.MediaService;
 
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/posts/{postId}/media")
@@ -33,7 +34,7 @@ public class MediaController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria uma mídia dentro de um post")
-    public ResponseEntity<DtoResponse<MediaDto>> create(@PathVariable String postId, @RequestBody CreateMediaDto create){
+    public ResponseEntity<DtoResponse<MediaDto>> create(@PathVariable String postId, @Valid @RequestBody CreateMediaDto create){
         var media = mediaService.create(UUID.fromString(postId), create);
         return ResponseEntity.ok(DtoResponse.success(mediaMapper.toDto(media)));
     }

@@ -1,8 +1,11 @@
 package unisinos.apptrip.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -10,78 +13,84 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.*;
 import unisinos.apptrip.filter.JwtFilter;
 import unisinos.apptrip.service.UserDetailsServiceImpl;
 
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
-
-    @Autowired
-    private JwtFilter jwtFilter;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private final JwtFilter jwtFilter;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/v1/users-auth/**",
-                                "/api/v1/users-auth/login/**",
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users-auth", "/api/v1/users-auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/v1/routes",
                                 "/api/v1/routes/published",
+                                "/api/v1/routes/*",
                                 "/api/v1/routes/*/places",
-                                "/api/v1/routes/*/places/**",
-                                "/api/v1/uploads/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/swagger-resources/**",
-                                "/webjars/**"
+                                "/api/v1/places/*",
+                                "/api/v1/places/*/social",
+                                "/api/v1/places/*/posts",
+                                "/api/v1/places/*/ratings",
+                                "/api/v1/places/*/route-links",
+                                "/api/v1/posts",
+                                "/api/v1/posts/*",
+                                "/api/v1/posts/*/media",
+                                "/api/v1/posts/*/media/*",
+                                "/api/v1/posts/*/comments",
+                                "/api/v1/posts/*/comments/*",
+                                "/api/v1/uploads/*"
                         ).permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(sess -> sess
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, exception) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            response.getWriter().write("{\"data\":null,\"error\":\"Autenticação obrigatória.\"}");
+                        })
+                        .accessDeniedHandler((request, response, exception) -> {
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            response.getWriter().write("{\"data\":null,\"error\":\"Acesso negado.\"}");
+                        })
                 )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailsService)
-                .httpBasic(_ -> {})
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .build();
     }
 
-            @Bean
-            public CorsConfigurationSource corsConfigurationSource() {
-            var config = new CorsConfiguration();
-            config.setAllowedOrigins(List.of(
-                "http://localhost:5173",
-                "http://127.0.0.1:5173",
-                "http://localhost:19006",
-                "http://127.0.0.1:19006",
-                "https://tiarlesbutzk.com.br",
-                "http://tiarlesbutzk.com.br",
-                "https://app.tiarlesbutzk.com.br",
-                "http://app.tiarlesbutzk.com.br",
-                "http://tiarlesbutzk.com.br:65271",
-                "https://tiarlesbutzk.com.br:65271"
-            ));
-            config.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
-            config.setAllowedHeaders(List.of("*"));
-            config.setAllowCredentials(true);
-
-            var source = new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/**", config);
-            return source;
-            }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        var config = new CorsConfiguration();
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:*", "http://127.0.0.1:*",
+                "https://tiarlesbutzk.com.br", "https://*.tiarlesbutzk.com.br"
+        ));
+        config.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -89,8 +98,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
-

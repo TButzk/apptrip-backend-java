@@ -23,6 +23,12 @@ public class Media {
 
     private String url;
 
+    private String storageFilename;
+
+    private String contentType;
+
+    private Long sizeBytes;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;

@@ -40,6 +40,11 @@ public class Place {
 
     private LocalDateTime capturedAt;
 
+    @Column(unique = true)
+    private UUID clientPointId;
+
+    private Double accuracyMeters;
+
     private String street;
 
     private String streetNumber;

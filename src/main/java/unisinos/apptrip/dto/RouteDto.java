@@ -19,5 +19,6 @@ public class RouteDto {
     private RouteStatus status;
     private LocalDateTime publishedAt;
     private LocalDateTime finalizedAt;
+    private Integer minimumDistanceMeters;
 }
 

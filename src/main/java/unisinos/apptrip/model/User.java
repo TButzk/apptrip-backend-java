@@ -27,6 +27,11 @@ public class User {
 
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    @Column(nullable = false)
+    private UserRole role = UserRole.USER;
+
     @OneToMany(mappedBy = "user")
     private List<FavoritePlaces> favoritePlaces;
 

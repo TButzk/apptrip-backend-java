@@ -38,6 +38,10 @@ public class Route {
     private LocalDateTime publishedAt;
 
     private LocalDateTime finalizedAt;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Integer minimumDistanceMeters = 25;
     
     public List<UUID> getPlaceIds() {
     	if (places == null) {

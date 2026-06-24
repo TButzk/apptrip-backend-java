@@ -13,6 +13,8 @@ public class MediaMapper {
                 .name(media.getName())
                 .url(media.getUrl())
                 .type(media.getType())
+                .contentType(media.getContentType())
+                .sizeBytes(media.getSizeBytes())
                 .postId(media.getPost().getId())
                 .build();
     }

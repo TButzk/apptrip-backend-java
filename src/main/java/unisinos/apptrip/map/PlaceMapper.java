@@ -1,12 +1,16 @@
 package unisinos.apptrip.map;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import unisinos.apptrip.model.Place;
 import unisinos.apptrip.dto.PlaceDto;
+import unisinos.apptrip.repository.PostRepository;
 
 @Component
+@RequiredArgsConstructor
 public class PlaceMapper {
+    private final PostRepository postRepository;
 	
     public PlaceDto toDto(Place place){
         return PlaceDto.builder()
@@ -16,6 +20,8 @@ public class PlaceMapper {
 				.longitude(place.getLongitude())
 				.sequence(place.getSequence())
 				.capturedAt(place.getCapturedAt())
+                .clientPointId(place.getClientPointId())
+                .accuracyMeters(place.getAccuracyMeters())
 				.neighborhood(place.getNeighborhood())
 				.street(place.getStreet())
 				.streetNumber(place.getStreetNumber())
@@ -26,7 +32,7 @@ public class PlaceMapper {
 				.state(place.getState())
 				.type(place.getType())
 				.routeId(place.getRoute().getId())
-				.eventIds(place.getPostsIds())
+				.eventIds(place.getId() == null ?java.util.List.of() : postRepository.findIdsByPlaceId(place.getId()))
                 .build();
     }
 }

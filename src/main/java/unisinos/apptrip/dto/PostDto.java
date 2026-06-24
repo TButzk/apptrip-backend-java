@@ -3,7 +3,7 @@ package unisinos.apptrip.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,12 +17,14 @@ public class PostDto {
 
     private String message;
 
-    private Date date;
+    private LocalDateTime date;
 
     private UUID userId;
 
     private UUID placeId;
 
     private List<UUID> mediaIds;
+
+    private String userName;
 }
 

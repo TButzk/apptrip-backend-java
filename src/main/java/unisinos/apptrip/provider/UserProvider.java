@@ -1,28 +1,25 @@
 package unisinos.apptrip.provider;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import unisinos.apptrip.exception.ApiException;
 import unisinos.apptrip.model.AuthenticatedUser;
+
+import java.util.Optional;
 
 @Component
 public class UserProvider {
-
     public AuthenticatedUser getAuthenticatedUser() {
+        return getOptionalAuthenticatedUser()
+                .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED, "Autenticação obrigatória."));
+    }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth == null || !auth.isAuthenticated()) {
-            throw new IllegalStateException("Nenhum usuário autenticado no contexto.");
+    public Optional<AuthenticatedUser> getOptionalAuthenticatedUser() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || !(auth.getPrincipal() instanceof AuthenticatedUser user)) {
+            return Optional.empty();
         }
-
-        Object principal = auth.getPrincipal();
-
-        if (!(principal instanceof AuthenticatedUser)) {
-            throw new IllegalStateException("Principal não é uma instância de UserDetails.");
-        }
-
-        return ((AuthenticatedUser) principal);
+        return Optional.of(user);
     }
 }
-

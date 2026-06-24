@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Data
 @AllArgsConstructor
@@ -18,11 +19,12 @@ public class AuthenticatedUser implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private UUID id;
     private String username;
-    private String password;
+	private String password;
+    private UserRole role;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+    public Collection<?extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override

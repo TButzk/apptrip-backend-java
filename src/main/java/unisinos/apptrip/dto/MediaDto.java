@@ -19,5 +19,9 @@ public class MediaDto {
     private String url;
 
     private MediaType type;
+
+    private String contentType;
+
+    private Long sizeBytes;
 }
 

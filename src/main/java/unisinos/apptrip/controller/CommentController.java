@@ -17,6 +17,7 @@ import unisinos.apptrip.model.shared.PageResponse;
 import unisinos.apptrip.service.CommentService;
 
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/posts/{postId}/comments")
@@ -34,7 +35,7 @@ public class CommentController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria um comment dentro de um post")
-    public ResponseEntity<DtoResponse<CommentDto>> create(@PathVariable String postId, @RequestBody CreateCommentDto create){
+    public ResponseEntity<DtoResponse<CommentDto>> create(@PathVariable String postId, @Valid @RequestBody CreateCommentDto create){
         var comment = commentService.create(UUID.fromString(postId), create);
         return ResponseEntity.ok(DtoResponse.success(commentMapper.toDto(comment)));
     }
@@ -66,7 +67,7 @@ public class CommentController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza um comment de um post")
-    public ResponseEntity<DtoResponse<CommentDto>> update(@PathVariable String postId, @PathVariable String id, @RequestBody UpdateCommentDto update){
+    public ResponseEntity<DtoResponse<CommentDto>> update(@PathVariable String postId, @PathVariable String id, @Valid @RequestBody UpdateCommentDto update){
         var comment = commentService.update(UUID.fromString(id), update);
         return ResponseEntity.ok(DtoResponse.success(commentMapper.toDto(comment)));
     }

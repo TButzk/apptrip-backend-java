@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import unisinos.apptrip.map.RouteMapper;
 import unisinos.apptrip.dto.CreateRouteDto;
 import unisinos.apptrip.dto.RouteDto;
+import unisinos.apptrip.dto.UpdateRouteDto;
 import unisinos.apptrip.model.shared.DtoResponse;
 import unisinos.apptrip.model.shared.PageInfo;
 import unisinos.apptrip.model.shared.PageResponse;
 import unisinos.apptrip.service.RouteService;
 
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/routes")
@@ -63,7 +65,10 @@ public class RouteController {
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Retorna uma lista de rotas publicadas")
-    public ResponseEntity<PageResponse<RouteDto>> getPublished(@RequestParam int skip, @RequestParam int take){
+    public ResponseEntity<PageResponse<RouteDto>> getPublished(
+            @RequestParam(defaultValue = "0") int skip,
+            @RequestParam(defaultValue = "30") int take
+    ){
         var routes = routeService.getPublished(take, skip);
         var response = PageResponse.success(routes.map(routeMapper::toDto).toList(), PageInfo.fromPage(routes));
         return ResponseEntity.ok(response);
@@ -74,7 +79,7 @@ public class RouteController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria um route")
-    public ResponseEntity<DtoResponse<RouteDto>> create(@RequestBody CreateRouteDto create){
+    public ResponseEntity<DtoResponse<RouteDto>> create(@Valid @RequestBody CreateRouteDto create){
         var route = routeService.create(create);
         return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
     }
@@ -89,18 +94,23 @@ public class RouteController {
         return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
     }
 
+    @PatchMapping("{id}")
+    @ApiResponse(responseCode = "200", description = "Sucesso!")
+    @ApiResponse(responseCode =  "404", description = "Nao encontrado.")
+    @ApiResponse(responseCode =  "400", description = "Erro na validacao dos dados enviados.")
+    @Operation(summary = "Atualiza uma route pelo id")
+    public ResponseEntity<DtoResponse<RouteDto>> update(@PathVariable String id, @Valid @RequestBody UpdateRouteDto update){
+        var route = routeService.update(UUID.fromString(id), update);
+        return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
+    }
+
     @PatchMapping("{id}/publish")
     @ApiResponse(responseCode = "200", description = "Sucesso!")
     @ApiResponse(responseCode =  "400", description = "Erro na validacao de publicacao.")
     @Operation(summary = "Publica uma route")
     public ResponseEntity<DtoResponse<RouteDto>> publish(@PathVariable String id){
-        try {
-            var route = routeService.publish(UUID.fromString(id));
-            return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
-        } catch (IllegalStateException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(DtoResponse.error(exception.getMessage()));
-        }
+        var route = routeService.publish(UUID.fromString(id));
+        return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
     }
 
     @PatchMapping("{id}/finalize")
@@ -108,13 +118,8 @@ public class RouteController {
     @ApiResponse(responseCode =  "400", description = "Erro na validacao de finalizacao.")
     @Operation(summary = "Finaliza uma route")
     public ResponseEntity<DtoResponse<RouteDto>> finalizeRoute(@PathVariable String id){
-        try {
-            var route = routeService.finalizeRoute(UUID.fromString(id));
-            return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
-        } catch (IllegalStateException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(DtoResponse.error(exception.getMessage()));
-        }
+        var route = routeService.finalizeRoute(UUID.fromString(id));
+        return ResponseEntity.ok(DtoResponse.success(routeMapper.toDto(route)));
     }
 }
 

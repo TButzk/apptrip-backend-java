@@ -6,11 +6,14 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 import unisinos.apptrip.model.PlaceType;
+import jakarta.validation.constraints.*;
 
 @Builder
 @Data
 public class CreatePlaceDto {
 
+    @NotBlank
+    @Size(max = 180)
     private String name;
 
     private String street;
@@ -35,10 +38,18 @@ public class CreatePlaceDto {
 
 	private Double longitude;
 
+    @Positive
 	private Integer sequence;
 
+    @NotNull
 	private LocalDateTime capturedAt;
+
+    private UUID clientPointId;
+
+    @PositiveOrZero
+    private Double accuracyMeters;
     
+    @NotNull
     private UUID routeId;
 
 	public boolean hasCoordinates() {

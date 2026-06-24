@@ -17,6 +17,7 @@ import unisinos.apptrip.model.shared.PageResponse;
 import unisinos.apptrip.service.PostService;
 
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/posts")
@@ -34,7 +35,7 @@ public class PostsController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Cria um post")
-    public ResponseEntity<DtoResponse<PostDto>> create(@RequestBody CreatePostDto create){
+    public ResponseEntity<DtoResponse<PostDto>> create(@Valid @RequestBody CreatePostDto create){
 
         var post = postService.create(create);
         return ResponseEntity.ok(DtoResponse.success(postMapper.toDto(post)));
@@ -66,7 +67,7 @@ public class PostsController {
     @ApiResponse(responseCode =  "404", description = "Não encontrado.")
     @ApiResponse(responseCode =  "400", description = "Erro na validação dos dados enviados.")
     @Operation(summary = "Atualiza um post pelo id")
-    public ResponseEntity<DtoResponse<PostDto>> update(@PathVariable String id, @RequestBody UpdatePostDto update){
+    public ResponseEntity<DtoResponse<PostDto>> update(@PathVariable String id, @Valid @RequestBody UpdatePostDto update){
         var post = postService.update(UUID.fromString(id), update);
         return ResponseEntity.ok(DtoResponse.success(postMapper.toDto(post)));
     }
